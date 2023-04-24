@@ -6,7 +6,7 @@ conn = sqlite3.connect('ironkey.db')
 c = conn.cursor()
 
 def create_password_table():
-    c.execute(""" CREATE TABLE IF NOR EXISTS passwords (
+    c.execute(""" CREATE TABLE IF NOT EXISTS passwords (
         title text,
         password text
     )""")
