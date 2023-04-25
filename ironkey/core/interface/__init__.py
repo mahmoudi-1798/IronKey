@@ -1,1 +1,1 @@
-from .interface import Commands
+from .interface import Interface

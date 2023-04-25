@@ -1,1 +1,1 @@
-from .core.app import Command
+from .core.app import Commands
