@@ -1,16 +1,21 @@
-import sys
-class Commands():
+from getpass import getpass
+class Interface():
     
-    def init(self):
-        name = input("username:\n")
+    def get_info(self, param, hide=False):
+        
+        if hide:
+            result = getpass(f"{param}: \n")
+        else:
+           result = input(f"{param}: \n") 
         while True:
-            if name == None or name == "":
-                print("name is required")
-                name = input("username: \n")
+            if result == None or result == "":
+                print(f"{param} is required")
+                print("do you wana cancel? type exit")
+                result = input(f"{param}: \n")
                 continue
-            if name != None and name != "":
+            if result != None and result != "":
                 break
-        return print(name)
+        return result
     
     def generate(self):
         pass
