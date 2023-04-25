@@ -1,22 +1,17 @@
-from rand import Random
+from .rand import Random
 
 class Generator:
-    def __init__(self, very_strong=False, strong=False, 
-                 medium=False, weak=False):
-        self.very_strong = very_strong
-        self.strong = strong
-        self.medium = medium
-        self.weak = weak
+    def __init__(self):
         self.random = Random()
     
-    def generate(self):
-        if self.very_strong is True:
+    def generate(self, param):
+        if param == "very_strong":
             return self.random.very_strong()
-        if self.strong is True:
+        if param == "strong":
             return self.random.strong()
-        if self.medium is True:
+        if param == "medium":
             return self.random.medium()
-        if self.weak is True:
+        if param == "weak":
             return self.random.weak()
         return None
 

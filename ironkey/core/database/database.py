@@ -56,3 +56,12 @@ class Database:
             return True
         else:
             return False
+    
+    def list_all_passwords(self):
+        c.execute('''SELECT * FROM passwords''')
+        result = c.fetchall()
+        return result
+    
+    def delete(self, title):
+        c.execute('''DELETE FROM passwords WHERE title=?''', (title,))
+        conn.commit()
