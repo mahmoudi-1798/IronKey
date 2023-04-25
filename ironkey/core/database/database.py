@@ -41,6 +41,18 @@ class Database:
         
         if result:
             return True
-        
+        else:
+            return False
+    
+    def add_password(self, title,password):
+        c.execute('''INSERT INTO passwords (title, password) VALUES (?, ?)''', (title, password))
+        conn.commit()
+        return print("congratulation, mission was successful")
+    
+    def check_password_exist(self,title):
+        c.execute('''SELECT * FROM passwords WHERE title=?''', (title,))
+        result = c.fetchone()
+        if result:
+            return True
         else:
             return False
