@@ -1,9 +1,11 @@
 from .interface import Interface as interface
 from .database import database
 from .generator import generator
+from .help_text import text
 
 db = database.Database()
 gen = generator.Generator()
+
 class Commands:
     
     def init(self):
@@ -75,3 +77,5 @@ class Commands:
                     return
                 else:
                     return
+    def help(self):
+        return print(text)
