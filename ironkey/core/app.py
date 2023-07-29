@@ -8,67 +8,78 @@ gen = generator.Generator()
 
 class Commands:
     
+    # Creating a User
     def init(self):
         check = db.check_user_exist()
         if check is True:
             print("User already exist")
             return 
         else:
-            name = interface.get_info(name="username", prefix="choose a")
+            name = interface.get_info(name="username", prefix="Choose a")
             if name == "ex" or name == "exit":
-                return print("mission has been terminated")
+                return print("Mission has been terminated")
             
-            password = interface.get_info(name="password", prefix="choose a",hide=True)
+            password = interface.get_info(name="password", prefix="Choose a",hide=True)
             db.add_username(name, password)
     
+    # Adding a (title, password) to db 
     def add(self):
-        title = interface.get_info(name="title", prefix="choose a", suffix="ex: github.com")
+        title = interface.get_info(name="title",prefix="Choose a", suffix="ex: github.com")
         check = db.check_password_exist(title)
         if check:
-            return print("Oops this title already exist")
+            return print("Oops, title already exists.")
         else:
-            password = interface.get_info(name="password", prefix="inter the", hide=True)
+            password = interface.get_info(name="password", prefix="Enter the ", hide=True)
             db.add_password(title, password)
     
+    # Takes a title. ask you how strong to generate, and pass (title, pass) to db
     def generate(self):
-        title = interface.get_info(name="title", prefix="choose a", suffix="ex: github.com")
+        title = interface.get_info(name="title", prefix="Choose a", suffix="ex: github.com")
         check = db.check_password_exist(title)
         if check:
-            return print("Oops this title already exist")
+            return print("Oops, title already exists.")
         else:
-            option = interface.options()
+            option = interface.options() # handles showing the options and choosing an option
             if option:
                 password = gen.generate(option)
                 db.add_password(title, password)
             else:
                 return
-    
+
+    # Show all records of db
+    # TODO: Create a beutiful list of passwords 
     def listall(self):
         result = db.list_all_passwords()
         if not result:
-            return print("There is nothing here")
+            return print("No data to display.")
         else:
             return print(result)
     
+    # Delete a record of db by title
     def delete(self):
-        title = interface.get_info(name="title", prefix="inter specific")
+        title = interface.get_info(name="title", prefix="Enter the specific")
         check = db.check_password_exist(title)
         if check:
             db.delete(title)
-            return print("mission was successful")
+            return print("Task accomplished successfully.")
         else:
-            return print("it doesn't exist")
+            return print("It doesn't exist")
     
+    # Changing the title. after asking to choose an option to genrerate. add (title, pass) to db
+    # PROBLEM: it should ask User's password to authenticate.
+    # TODO: Create an authentication before that.
+    # TODO: Ask if you want to insert your new password or generate a new for you.
+    # TODO: There should be a option to change the password without changing the title 
     def update(self):
-        title = interface.get_info(name="title to update", prefix="give the")
+        title = interface.get_info(name="title to update", prefix="Enter the")
         check = db.check_password_exist(title)
         if check is False:
-            return print("this title doesn't exist")
+            return print("This title doesn't exist")
         else:
-            new_title = interface.get_info(name="title", prefix="inter new name as a")
+            new_title = interface.get_info(name="title", prefix="Enter a new")
             check_title = db.check_password_exist(new_title)
             if check_title is True:
-                return print("this title already exist")
+                return print("This title already exist")
             else:
                 option = interface.options()
                 if option:
@@ -77,5 +88,7 @@ class Commands:
                     return
                 else:
                     return
+    
+    # Show help text
     def help(self):
         return print(text)
