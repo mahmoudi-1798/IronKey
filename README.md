@@ -11,7 +11,7 @@ all basic commands of IronKey are:
 IronKey init
 IronKey add
 IronKey generate
-IronKet delete
+IronKey delete
 IronKey listall
 IronKey update
 IronKey backup
