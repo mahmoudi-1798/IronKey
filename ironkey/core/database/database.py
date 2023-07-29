@@ -2,7 +2,6 @@ import sqlite3
 
 conn = sqlite3.connect('ironkey.db')
 
-# create a cursor
 c = conn.cursor()
 
 class Database:
@@ -18,7 +17,7 @@ class Database:
     create_password_table()
 
     def create_user_table():
-        ''' create table named user to store user password of user
+        ''' create table named user to store password of user
         '''
         c.execute(''' CREATE TABLE IF NOT EXISTS user (
             name TEXT,
@@ -29,10 +28,9 @@ class Database:
     create_user_table()
 
     def add_username(self, name, password):
-        
         c.execute('''INSERT INTO user (name, password, is_exist) VALUES (?, ?, 1)''', (name, password))
         conn.commit()
-        return print("congratulation, mission was successful")
+        return print("Task accomplished successfully.")
     
     def check_user_exist(self):
         c.execute('''SELECT COUNT(*) FROM user WHERE is_exist = 1''')
@@ -47,7 +45,7 @@ class Database:
     def add_password(self, title,password):
         c.execute('''INSERT INTO passwords (title, password) VALUES (?, ?)''', (title, password))
         conn.commit()
-        return print("congratulation, mission was successful")
+        return print("Task accomplished successfully.")
     
     def check_password_exist(self,title):
         c.execute('''SELECT * FROM passwords WHERE title=?''', (title,))
