@@ -41,7 +41,17 @@ class Database:
             return True
         else:
             return False
-    
+
+    # check if username and password is correct
+    def auth_user(self, name, password):
+        c.execute('''SELECT * FROM user WHERE name=?''', (name,))
+        result = c.fetchone()
+        
+        if result and result[1] == password:
+            return True
+        else:
+            return False
+
     def add_password(self, title,password):
         c.execute('''INSERT INTO passwords (title, password) VALUES (?, ?)''', (title, password))
         conn.commit()
