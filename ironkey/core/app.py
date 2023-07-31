@@ -3,6 +3,7 @@ from .database import database
 from .generator import generator
 from .help_text import text
 from .auth_utils import require_authentication
+import os
 
 db = database.Database()
 gen = generator.Generator()
@@ -80,7 +81,8 @@ class Commands:
     
     # Changing the title. after asking to choose an option to genrerate. add (title, pass) to db
     # PROBLEM: it should ask User's password to authenticate.
-    # TODO: Create an authentication before that.
+    # TODO(COMPLETED): add an authentication
+    # TODO(COMPLETED): When update a title the old one stays in db
     # TODO: Ask if you want to insert your new password or generate a new for you.
     # TODO: There should be a option to change the password without changing the title
     @require_authentication
@@ -95,13 +97,22 @@ class Commands:
             if check_title is True:
                 return print("This title already exist")
             else:
-                option = interface.options()
-                if option:
-                    password = gen.generate(option)
+                m_choose = interface.get_info(name="a password or have one generated?", 
+                                              prefix="Do you want to manually enter",
+                                              suffix="\n[1] Enter password\n[2] Generate")
+                if m_choose == "1":
+                    password = interface.get_info("Enter your new password", hide=True)
                     db.add_password(new_title, password)
-                    return
-                else:
-                    return
+                    db.delete(title)
+                elif m_choose == "2":
+                    option = interface.options()
+                    if option:
+                        password = gen.generate(option)
+                        db.add_password(new_title, password)
+                        db.delete(title)
+                        return
+                    else:
+                        return
     
     # Show help text
     def help(self):
