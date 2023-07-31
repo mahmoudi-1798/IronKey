@@ -83,6 +83,7 @@ class Commands:
     # PROBLEM: it should ask User's password to authenticate.
     # TODO(COMPLETED): add an authentication
     # TODO(COMPLETED): When update a title the old one stays in db
+    # TODO: It generate "None" in the "generate" part.
     # TODO: Ask if you want to insert your new password or generate a new for you.
     # TODO: There should be a option to change the password without changing the title
     @require_authentication
