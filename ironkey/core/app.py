@@ -1,7 +1,7 @@
 from .interface import Interface as interface
 from .database import database
 from .generator import generator
-from .help_text import text
+from .help_text import help_text
 from .auth_utils import require_authentication
 import os
 
@@ -33,23 +33,21 @@ class Commands:
         return m_check
 
     # Adding a (title, password) to db 
-    @require_authentication
     def add(self):
         title = interface.get_info(name="title",prefix="Choose a", suffix="ex: github.com")
         check = db.check_password_exist(title)
         if check:
-            return print("Oops, title already exists.")
+            return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
         else:
             password = interface.get_info(name="password", prefix="Enter the ", hide=True)
             db.add_password(title, password)
     
     # Takes a title. ask you how strong to generate, and pass (title, pass) to db
-    @require_authentication
     def generate(self):
         title = interface.get_info(name="title", prefix="Choose a", suffix="ex: github.com")
         check = db.check_password_exist(title)
         if check:
-            return print("Oops, title already exists.")
+            return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
         else:
             option = interface.options() # handles showing the options and choosing an option
             if option:
@@ -60,47 +58,44 @@ class Commands:
 
     # Show all records of db
     # TODO: Create a beutiful list of passwords 
-    @require_authentication
     def listall(self):
         result = db.list_all_passwords()
         if not result:
-            return print("No data to display.")
+            return print("\033[93m" + "There isn't any record to display." + "\033[0m") # To print it in yellow color
         else:
             return print(result)
     
     # Delete a record of db by title
-    @require_authentication
     def delete(self):
         title = interface.get_info(name="title", prefix="Enter the specific")
         check = db.check_password_exist(title)
         if check:
             db.delete(title)
-            return print("Task accomplished successfully.")
+            return print("\033[92m" + "Task accomplished successfully." + "\033[0m") # To print it in green color
         else:
-            return print("It doesn't exist")
+            return print("\033[93m" + "There isn't a record with this title." + "\033[0m") # To print it in yellow color
     
     # Changing the title. after asking to choose an option to genrerate. add (title, pass) to db
     # PROBLEM: it should ask User's password to authenticate.
     # TODO(COMPLETED): add an authentication
     # TODO(COMPLETED): When update a title the old one stays in db
-    # TODO: It generate "None" in the "generate" part.
-    # TODO: Ask if you want to insert your new password or generate a new for you.
+    # TODO(COMPLETED): Ask if you want to insert your new password or generate a new for you.
     # TODO: There should be a option to change the password without changing the title
-    @require_authentication
     def update(self):
         title = interface.get_info(name="title to update", prefix="Enter the")
         check = db.check_password_exist(title)
         if check is False:
-            return print("This title doesn't exist")
+            return print("\033[93m" + "Title doesn't exists." + "\033[0m") # To print it in yellow color
         else:
             new_title = interface.get_info(name="title", prefix="Enter a new")
             check_title = db.check_password_exist(new_title)
             if check_title is True:
-                return print("This title already exist")
+                return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
             else:
-                m_choose = interface.get_info(name="a password or have one generated?", 
+                m_choose = interface.get_info(name="a password or have one generated? \nPlease enter the number of your choice", 
                                               prefix="Do you want to manually enter",
-                                              suffix="\n[1] Enter password\n[2] Generate")
+                                              suffix="\n\n\t[1] Enter password\n\t[2] Generate\n> ")
+                
                 if m_choose == "1":
                     password = interface.get_info("Enter your new password", hide=True)
                     db.add_password(new_title, password)
@@ -117,4 +112,4 @@ class Commands:
     
     # Show help text
     def help(self):
-        return print(text)
+        return print(help_text)
