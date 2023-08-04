@@ -5,13 +5,13 @@ class Generator:
         self.random = Random()
     
     def generate(self, param):
-        if param == "very_strong":
+        if param == "Very Strong":
             return self.random.very_strong()
-        if param == "strong":
+        if param == "Strong":
             return self.random.strong()
-        if param == "medium":
+        if param == "Medium":
             return self.random.medium()
-        if param == "weak":
+        if param == "Weak":
             return self.random.weak()
         return None
 

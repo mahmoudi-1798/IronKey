@@ -55,7 +55,7 @@ class Database:
     def add_password(self, title,password):
         c.execute('''INSERT INTO passwords (title, password) VALUES (?, ?)''', (title, password))
         conn.commit()
-        return print("Task accomplished successfully.")
+        return print("\033[92m" + "Task accomplished successfully." + "\033[0m") # To print it in green color
     
     def check_password_exist(self,title):
         c.execute('''SELECT * FROM passwords WHERE title=?''', (title,))

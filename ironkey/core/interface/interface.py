@@ -7,9 +7,9 @@ class Interface():
     # suffix: part of prompt after the name
     def get_info(name, prefix='', suffix='', hide=False):
         if hide:
-            result = getpass(f"{prefix}{name}: {suffix} \n")
+            result = getpass(f"{prefix} {name}: {suffix} ")
         else:
-           result = input(f"{prefix} {name}: {suffix} \n") 
+           result = input(f"{prefix} {name}: {suffix}") 
         while True:
             if result == None or result == "":
                 print(f"{name} is required")
@@ -20,7 +20,6 @@ class Interface():
                 break
         return result
     
-    # TODO: Handle both int and string input
     def options():
         options = ["Very Strong", "Strong", "Medium", "Weak"]
         print("Enter the number of your choice:")
