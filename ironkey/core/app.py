@@ -4,10 +4,14 @@ from .generator import generator
 from .help_text import help_text
 from .auth_utils import require_authentication
 from terminaltables import SingleTable
+import hashlib
 import os
 
 db = database.Database()
 gen = generator.Generator()
+
+# user: test
+# pass: test1234
 
 class Commands:
     
@@ -23,14 +27,17 @@ class Commands:
                 return print("Mission has been terminated")
             
             password = interface.get_info(name="password", prefix="Choose a",hide=True)
-            db.add_username(name, password)
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            db.add_username(name, hashed_password)
     
     # authentication
     def auth(self):
         m_title = interface.get_info(name="username", prefix="Enter your")
         m_pass = interface.get_info(name="password", prefix="Enter your", hide=True)
-
-        m_check = db.auth_user(m_title, m_pass) 
+        hashed_pass = hashlib.sha256(m_pass.encode()).hexdigest()
+        m_check = db.auth_user(m_title, hashed_pass) 
+        if m_check == "User not found":
+            print("User not found in the database.")
         return m_check
 
     # Adding a (title, password) to db 

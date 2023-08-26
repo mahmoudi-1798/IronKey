@@ -2,6 +2,7 @@ from ironkey import Commands
 from ironkey.core.help_text import header_text
 import os
 import time
+import sys
 
 def header(text):
     os.system("clear")
@@ -11,7 +12,11 @@ def header(text):
 if __name__ == "__main__":
     ironkey = Commands()
 
-    if ironkey.auth():
+    if len(sys.argv) == 2 and sys.argv[1] == 'init':
+        ironkey.init()
+        time.sleep(3)
+        running = False
+    elif ironkey.auth():
         running = True
     else:
         running = False
