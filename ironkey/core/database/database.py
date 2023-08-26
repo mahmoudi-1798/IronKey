@@ -30,7 +30,7 @@ class Database:
     def add_username(self, name, password):
         c.execute('''INSERT INTO user (name, password, is_exist) VALUES (?, ?, 1)''', (name, password))
         conn.commit()
-        return print("Task accomplished successfully.")
+        return print("\033[92m" + "Task accomplished successfully." + "\033[0m") 
     
     def check_user_exist(self):
         c.execute('''SELECT COUNT(*) FROM user WHERE is_exist = 1''')

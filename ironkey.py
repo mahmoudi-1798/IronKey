@@ -43,7 +43,7 @@ if __name__ == "__main__":
             time.sleep(3)
         elif choose == "about":
             ironkey.help()
-            time.sleep(3)
+            input("\nPress Enter to continue...")
         elif choose == "exit":
             os.system("clear")
             running = False
