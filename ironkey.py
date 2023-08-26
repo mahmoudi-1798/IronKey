@@ -32,7 +32,7 @@ if __name__ == "__main__":
             time.sleep(3)
         elif choose == "listall":
             ironkey.listall()
-            time.sleep(3)
+            input("\nPress Enter to continue...")
         elif choose == "update":
             ironkey.update()
             time.sleep(3)
@@ -43,5 +43,5 @@ if __name__ == "__main__":
             os.system("clear")
             running = False
         else:
-            print("Invalid command. Please enter a valid command.")
+            print("\033[93m" + "Invalid command. Please enter a valid command." + "\033[0m") 
             time.sleep(3)

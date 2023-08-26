@@ -7,7 +7,7 @@ class Interface():
     # suffix: part of prompt after the name
     def get_info(name, prefix='', suffix='', hide=False):
         if hide:
-            result = getpass(f"{prefix} {name}: {suffix} ")
+            result = getpass(f"{prefix} {name}: {suffix}")
         else:
            result = input(f"{prefix} {name}: {suffix}") 
         while True:

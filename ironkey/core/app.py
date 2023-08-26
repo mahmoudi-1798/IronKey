@@ -3,6 +3,7 @@ from .database import database
 from .generator import generator
 from .help_text import help_text
 from .auth_utils import require_authentication
+from terminaltables import SingleTable
 import os
 
 db = database.Database()
@@ -34,17 +35,17 @@ class Commands:
 
     # Adding a (title, password) to db 
     def add(self):
-        title = interface.get_info(name="title",prefix="Choose a", suffix="ex: github.com")
+        title = interface.get_info(name="title",prefix="Choose a", suffix="")
         check = db.check_password_exist(title)
         if check:
             return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
         else:
-            password = interface.get_info(name="password", prefix="Enter the ", hide=True)
+            password = interface.get_info(name="password", prefix="Enter the", suffix="", hide=True)
             db.add_password(title, password)
     
     # Takes a title. ask you how strong to generate, and pass (title, pass) to db
     def generate(self):
-        title = interface.get_info(name="title", prefix="Choose a", suffix="ex: github.com")
+        title = interface.get_info(name="title", prefix="Choose a", suffix="")
         check = db.check_password_exist(title)
         if check:
             return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
@@ -57,13 +58,14 @@ class Commands:
                 return
 
     # Show all records of db
-    # TODO: Create a beutiful list of passwords 
     def listall(self):
         result = db.list_all_passwords()
         if not result:
             return print("\033[93m" + "There isn't any record to display." + "\033[0m") # To print it in yellow color
         else:
-            return print(result)
+            headers = ["Title", "Password"]
+            table = SingleTable([headers] + result)
+            print("\n" + table.table)
     
     # Delete a record of db by title
     def delete(self):
