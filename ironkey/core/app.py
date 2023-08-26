@@ -36,8 +36,6 @@ class Commands:
         m_pass = interface.get_info(name="password", prefix="Enter your", hide=True)
         hashed_pass = hashlib.sha256(m_pass.encode()).hexdigest()
         m_check = db.auth_user(m_title, hashed_pass) 
-        if m_check == "User not found":
-            print("User not found in the database.")
         return m_check
 
     # Adding a (title, password) to db 
