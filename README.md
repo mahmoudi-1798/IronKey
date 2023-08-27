@@ -96,5 +96,3 @@ Additional security features
 ## Contributing
 Contributions to IronKey are welcome! Feel free to open issues and pull requests to suggest improvements or report bugs.
 
-## License
-This project is licensed under the MIT License.
