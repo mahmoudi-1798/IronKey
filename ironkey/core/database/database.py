@@ -11,7 +11,7 @@ class Database:
         '''
         c.execute(''' CREATE TABLE IF NOT EXISTS passwords (
             title text,
-            password text
+            password BLOB
         )''')
         conn.commit()
     create_password_table()

@@ -6,9 +6,13 @@ from .auth_utils import require_authentication
 from terminaltables import SingleTable
 import hashlib
 import os
+from .crypto.main import EncryptionManager
+import base64
 
 db = database.Database()
 gen = generator.Generator()
+
+manager = EncryptionManager()
 
 # user: test
 # pass: test1234
@@ -36,6 +40,11 @@ class Commands:
         m_pass = interface.get_info(name="password", prefix="Enter your", hide=True)
         hashed_pass = hashlib.sha256(m_pass.encode()).hexdigest()
         m_check = db.auth_user(m_title, hashed_pass) 
+
+        # Make the key for the password encryption     
+        key = manager.generate_derived_key(m_title, b"IronKey")
+        manager.initialize_encryptor(key)
+
         return m_check
 
     # Adding a (title, password) to db 
@@ -46,7 +55,8 @@ class Commands:
             return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
         else:
             password = interface.get_info(name="password", prefix="Enter the", suffix="", hide=True)
-            db.add_password(title, password)
+            encrypted_password = manager.encrypt_data(password)
+            db.add_password(title, encrypted_password)
     
     # Takes a title. ask you how strong to generate, and pass (title, pass) to db
     def generate(self):
@@ -69,7 +79,16 @@ class Commands:
             return print("\033[93m" + "There isn't any record to display." + "\033[0m") # To print it in yellow color
         else:
             headers = ["Title", "Password"]
-            table = SingleTable([headers] + result)
+            new_result = []  # Create a new list to hold modified data
+            
+            # Decrypt every record to show
+            for record in result:
+                title, encrypted_password = record
+                decrypted_password = manager.decrypt_data(encrypted_password)
+                new_record = [title, decrypted_password]  # Create a new list with modified data
+                new_result.append(new_record) 
+
+            table = SingleTable([headers] + new_result)
             print("\n" + table.table)
     
     # Delete a record of db by title

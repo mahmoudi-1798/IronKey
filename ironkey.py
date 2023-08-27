@@ -37,13 +37,13 @@ if __name__ == "__main__":
             time.sleep(3)
         elif choose == "listall":
             ironkey.listall()
-            input("\nPress Enter to continue...")
+            input("\nPress Enter to continue...\n\n")
         elif choose == "update":
             ironkey.update()
             time.sleep(3)
         elif choose == "about":
             ironkey.help()
-            input("\nPress Enter to continue...")
+            input("\nPress Enter to continue...\n\n")
         elif choose == "exit":
             os.system("clear")
             running = False
