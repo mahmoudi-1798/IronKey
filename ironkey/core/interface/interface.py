@@ -1,4 +1,5 @@
 from getpass import getpass
+
 class Interface():
     
     # To get input from User

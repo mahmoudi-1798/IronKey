@@ -1,8 +1,8 @@
 from ironkey import Commands
 from ironkey.core.help_text import header_text
-import os
 import time
 import sys
+import os
 
 def header(text):
     os.system("clear")

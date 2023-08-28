@@ -4,11 +4,11 @@ from .generator import generator
 from .help_text import help_text
 from .auth_utils import require_authentication
 from terminaltables import SingleTable
-import hashlib
-import os
 from .crypto.main import EncryptionManager
+import hashlib
 import base64
 import time
+import os
 
 db = database.Database()
 gen = generator.Generator()
@@ -64,12 +64,31 @@ class Commands:
         title = interface.get_info(name="title", prefix="Choose a", suffix="")
         check = db.check_password_exist(title)
         if check:
-            return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
+            user_ask = input("\033[93m" + "Oops, title already exists.Do you want to overwrite it? (y/n): " + "\033[0m") # To print it in yellow color
+            
+            if user_ask == "y" or user_ask == "Y":
+                option = interface.options()
+                if option:
+                    password = gen.generate(option)
+                    db.delete(title)
+                    encrypted_new_password = manager.encrypt_data(password)
+                    db.add_password(title, encrypted_new_password)
+                    return
+                else:
+                    return
+            
+            elif user_ask == "n" or user_ask == "N":
+                print("Redirecting to main menu.")
+                return
+            
+            else:
+                return print("\033[93m" + "Invalid Input." + "\033[0m")
         else:
             option = interface.options() # handles showing the options and choosing an option
             if option:
                 password = gen.generate(option)
-                db.add_password(title, password)
+                encrypted_new_password = manager.encrypt_data(password)
+                db.add_password(title, encrypted_new_password)
             else:
                 return
 
@@ -103,11 +122,6 @@ class Commands:
             return print("\033[93m" + "There isn't a record with this title." + "\033[0m") # To print it in yellow color
     
     # Changing the title. after asking to choose an option to genrerate. add (title, pass) to db
-    # PROBLEM: it should ask User's password to authenticate.
-    # TODO(COMPLETED): add an authentication
-    # TODO(COMPLETED): When update a title the old one stays in db
-    # TODO(COMPLETED): Ask if you want to insert your new password or generate a new for you.
-    # TODO: There should be a option to change the password without changing the title
     def update(self):
         title = interface.get_info(name="title to update", prefix="Enter the")
         check = db.check_password_exist(title)
@@ -116,8 +130,39 @@ class Commands:
         else:
             new_title = interface.get_info(name="title", prefix="Enter a new")
             check_title = db.check_password_exist(new_title)
+            
             if check_title is True:
-                return print("\033[93m" + "Oops, title already exists." + "\033[0m") # To print it in yellow color
+                user_ask = input("\033[93m" + "Oops, title already exists.Do you want to overwrite it? (y/n): " + "\033[0m") # To print it in yellow color
+            
+                if user_ask == "y" or user_ask == "Y":
+                    m_choose = interface.get_info(name="a password or have one generated? \nPlease enter the number of your choice", 
+                            prefix="Do you want to manually enter",
+                            suffix="\n\n\t[1] Enter password\n\t[2] Generate\n> ")
+                    
+                    if m_choose == "1":
+                        password = interface.get_info("Enter your new password", hide=True)
+                        db.delete(title)
+                        encrypted_new_password = manager.encrypt_data(password)
+                        db.add_password(new_title, encrypted_new_password)
+
+                    elif m_choose == "2":
+                        option = interface.options()
+                        if option:
+                            password = gen.generate(option)
+                            db.delete(title)
+                            encrypted_new_password = manager.encrypt_data(password)
+                            db.add_password(new_title, encrypted_new_password)
+                            return
+                        else:
+                            return
+                
+                elif user_ask == "n" or user_ask == "N":
+                    print("Redirecting to main menu.")
+                    return
+                
+                else:
+                    return print("\033[93m" + "Invalid Input." + "\033[0m")
+            
             else:
                 m_choose = interface.get_info(name="a password or have one generated? \nPlease enter the number of your choice", 
                                               prefix="Do you want to manually enter",
@@ -125,13 +170,15 @@ class Commands:
                 
                 if m_choose == "1":
                     password = interface.get_info("Enter your new password", hide=True)
-                    db.add_password(new_title, password)
+                    encrypted_new_password = manager.encrypt_data(password)
+                    db.add_password(new_title, encrypted_new_password)
                     db.delete(title)
                 elif m_choose == "2":
                     option = interface.options()
                     if option:
                         password = gen.generate(option)
-                        db.add_password(new_title, password)
+                        encrypted_new_password = manager.encrypt_data(password)
+                        db.add_password(new_title, encrypted_new_password)
                         db.delete(title)
                         return
                     else:
