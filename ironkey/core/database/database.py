@@ -73,3 +73,12 @@ class Database:
     def delete(self, title):
         c.execute('''DELETE FROM passwords WHERE title=?''', (title,))
         conn.commit()
+
+    # Clear the database
+    def clear(self):
+        c.execute("DELETE FROM user")
+        conn.commit()
+
+        # Clear the passwords table
+        c.execute("DELETE FROM passwords")
+        conn.commit()

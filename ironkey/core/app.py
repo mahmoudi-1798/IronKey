@@ -8,6 +8,7 @@ import hashlib
 import os
 from .crypto.main import EncryptionManager
 import base64
+import time
 
 db = database.Database()
 gen = generator.Generator()
@@ -136,6 +137,21 @@ class Commands:
                     else:
                         return
     
+    # To Delete Account
+    def delete_account(self):
+        danger_phrase = input("\033[1m\033[31m" + "Are you sure you want to delete account and clear the database? \nThis action cannot be undone. Type 'CONFIRM' to proceed: " + "\033[0m")
+        if danger_phrase == "CONFIRM":
+            db.clear()
+            print("\033[1m\033[31m" + "DELETING ACCOUNT AND CLEANING PASSWORDS..." + "\033[0m")
+            for i in range(0, 3):
+                time.sleep(1)
+                print(".")
+            time.sleep(1)
+            return print("\033[92mDatabase tables cleared successfully.\033[0m")
+            
+        else:
+            return print("\033[93m" + "Process has been cancelled." + "\033[0m")
+
     # Show help text
     def help(self):
         return print(help_text)

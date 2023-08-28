@@ -44,6 +44,14 @@ if __name__ == "__main__":
         elif choose == "about":
             ironkey.help()
             input("\nPress Enter to continue...\n\n")
+        elif choose == "purge":
+            if ironkey.auth():
+                ironkey.delete_account()
+            else:
+                print("\033[91m" + "Authentication failed. Incorrect username or password." + "\033[0m")
+            
+            input("Press Enter to exit.\n")
+            running = False
         elif choose == "exit":
             os.system("clear")
             running = False
