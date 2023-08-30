@@ -6,8 +6,7 @@ help_text = '''
       IronKey ensures that you have full control over your sensitive information.
 '''
 
-header_text = '''
-      ___                 _  __          
+header_text = '''      ___                 _  __          
      |_ _|_ __ ___  _ __ | |/ /___ _   _ 
       | || '__/ _ \| '_ \| ' // _ \ | | |
       | || | | (_) | | | | . \  __/ |_| |
@@ -19,7 +18,6 @@ header_text = '''
         IronKey> [\033[1mCOMMAND\033[0m]
 
       \033[1mCOMMANDS\033[0m
-        init        Create an account to begin using the password manager.
         add         Create a new password entry by providing a title and password.
         generate    Generates a secure password based on specified criteria.
         delete      Deletes a specific password record from the database.

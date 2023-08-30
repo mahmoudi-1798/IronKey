@@ -199,6 +199,10 @@ class Commands:
         else:
             return print("\033[93m" + "Process has been cancelled." + "\033[0m")
 
+    # Backup
+    def back_up(self):
+        return print("\n\tComing soon...")
+
     # Show help text
     def help(self):
         return print(help_text)

@@ -8,7 +8,6 @@ def header(text):
     os.system("clear")
     print(text)
     
-
 if __name__ == "__main__":
     ironkey = Commands()
 
@@ -52,6 +51,9 @@ if __name__ == "__main__":
             
             input("Press Enter to exit.\n")
             running = False
+        elif choose == "backup":
+            ironkey.back_up()
+            time.sleep(3)
         elif choose == "exit":
             os.system("clear")
             running = False
