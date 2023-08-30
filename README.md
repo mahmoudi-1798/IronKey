@@ -21,7 +21,7 @@ IronKey is a local password management project that allows you to securely manag
 - [License](#license)
 
 ## About the Development of IronKey
-This project is built upon the foundation laid by @heydyvex, this project has seen substantial development and customization on my part. The result is an even more robust and enhanced version.
+This project is built upon the foundation laid by [@heydyvex](https://github.com/heydyvex), this project has seen substantial development and customization on my part. The result is an even more robust and enhanced version.
 
 ## Getting Started
 
