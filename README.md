@@ -20,8 +20,8 @@ IronKey is a local password management project that allows you to securely manag
 - [Contributing](#contributing)
 - [License](#license)
 
-## About IronKey
-IronKey is a password management project that prioritizes local storage and security. It aims to provide users with a simple and efficient way to manage their passwords without the need for third-party applications. By keeping your password data on your local device, IronKey ensures that you have full control over your sensitive information.
+## About the Development of IronKey
+This project is built upon the foundation laid by @heydyvex, this project has seen substantial development and customization on my part. The result is an even more robust and enhanced version.
 
 ## Getting Started
 
