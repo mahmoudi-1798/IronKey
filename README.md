@@ -63,6 +63,7 @@ IronKey> delete
 You'll need to provide the title of the password you want to delete.
 
 ### Listing All Passwords
+![alt text](https://github.com/mahmoudi-1798/IronKey/blob/master/images/listall.png?raw=true)
 To list all stored passwords, use the following command:
 ```
 IronKey> listall
@@ -83,6 +84,7 @@ IronKey> backup
 Please handle backup files with care and ensure they are stored securely.
 
 ### Deleting Your Account
+![alt text](https://github.com/mahmoudi-1798/IronKey/blob/master/images/purge.png?raw=true)
 To permanently delete your account and erase all stored passwords, use the following command:
 ```
 IronKey> purge
